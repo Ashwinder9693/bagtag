@@ -1,0 +1,315 @@
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Luggage Contact Card</title>
+<meta name="description" content="If found, please contact owner. Contains USA and India addresses.">
+<style>
+  :root{
+    --bg:#fafafa;
+    --card:#ffffff;
+    --ink:#1a1a1a;
+    --muted:#6b7280;
+    --border:#e5e5e5;
+    --accent:#2c2c2c;
+    --badge:#f5f5f5;
+    --shadow:rgba(0,0,0,0.08);
+  }
+  html,body{
+    margin:0;
+    background:linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    color:var(--ink);
+    font:16px/1.5 -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Helvetica,Arial,sans-serif;
+  }
+  .wrap{
+    min-height:100dvh;
+    display:grid;
+    place-items:center;
+    padding:40px 24px;
+  }
+  .card{
+    width:min(820px,94vw);
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:24px;
+    box-shadow:0 4px 20px var(--shadow), 0 0 1px rgba(0,0,0,0.1);
+    padding:48px;
+    position:relative;
+    overflow:hidden;
+  }
+  .card::before{
+    content:'';
+    position:absolute;
+    top:0;
+    left:0;
+    right:0;
+    height:4px;
+    background:linear-gradient(90deg, #d4d4d4, #737373, #d4d4d4);
+  }
+  .top{
+    display:flex;
+    align-items:flex-start;
+    gap:16px;
+    margin-bottom:32px;
+    padding-bottom:24px;
+    border-bottom:2px solid var(--border);
+  }
+  .badge{
+    font-size:.72rem;
+    color:var(--accent);
+    background:var(--badge);
+    padding:.4rem .8rem;
+    border-radius:8px;
+    font-weight:700;
+    letter-spacing:.08em;
+    border:1px solid var(--border);
+    white-space:nowrap;
+  }
+  .name{
+    font-size:clamp(28px,5vw,44px);
+    font-weight:700;
+    line-height:1.1;
+    letter-spacing:-.02em;
+    color:var(--accent);
+  }
+  .subtitle{
+    color:var(--muted);
+    margin-top:8px;
+    font-size:.95rem;
+    font-weight:500;
+  }
+  .grid{
+    margin-top:32px;
+    display:grid;
+    gap:20px;
+    grid-template-columns:repeat(2, minmax(0,1fr));
+  }
+  .sec{
+    background:var(--bg);
+    border:1px solid var(--border);
+    border-radius:16px;
+    padding:24px;
+    min-height:160px;
+    transition:all 0.3s ease;
+  }
+  .sec:hover{
+    box-shadow:0 2px 12px var(--shadow);
+    border-color:#d4d4d4;
+  }
+  .sec h3{
+    margin:0 0 12px;
+    font-size:1.05rem;
+    letter-spacing:-.01em;
+    font-weight:600;
+    color:var(--accent);
+  }
+  .flag{
+    margin-right:8px;
+    font-size:1.2rem;
+  }
+  .addr, .contact-line {
+    white-space:pre-wrap;
+    line-height:1.6;
+    color:var(--ink);
+  }
+  .muted{color:var(--muted)}
+  .contact{
+    margin-top:28px;
+    display:flex;
+    flex-wrap:wrap;
+    gap:14px;
+  }
+  .tag{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:12px;
+    padding:14px 16px;
+    flex:1;
+    min-width:200px;
+    transition:all 0.3s ease;
+  }
+  .tag:hover{
+    box-shadow:0 2px 8px var(--shadow);
+    border-color:#d4d4d4;
+  }
+  .small{font-size:.9rem}
+  .row{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    margin-bottom:6px;
+    font-weight:600;
+    color:var(--accent);
+  }
+  .printbar{
+    margin-top:32px;
+    display:flex;
+    gap:12px;
+    flex-wrap:wrap;
+  }
+  button{
+    background:var(--accent);
+    color:white;
+    font-weight:600;
+    border:none;
+    padding:12px 24px;
+    border-radius:10px;
+    cursor:pointer;
+    font-size:.95rem;
+    transition:all 0.2s ease;
+    box-shadow:0 2px 8px rgba(0,0,0,0.1);
+  }
+  button:hover{
+    background:#404040;
+    transform:translateY(-1px);
+    box-shadow:0 4px 12px rgba(0,0,0,0.15);
+  }
+  button:active{
+    transform:translateY(0);
+  }
+  .help{
+    color:var(--muted);
+    font-size:.88rem;
+    margin-top:20px;
+    padding:16px;
+    background:var(--bg);
+    border-radius:10px;
+    border:1px solid var(--border);
+  }
+  [contenteditable="true"]{
+    outline:2px solid transparent;
+    transition:all 0.2s ease;
+    padding:4px 8px;
+    margin:-4px -8px;
+    border-radius:6px;
+  }
+  [contenteditable="true"]:focus{
+    outline:2px solid #a3a3a3;
+    background:#f9f9f9;
+  }
+  
+  @media (max-width: 640px) {
+    .card{padding:32px 24px}
+    .grid{grid-template-columns:1fr}
+    .top{flex-direction:column;align-items:flex-start}
+  }
+  
+  @media print{
+    body{background:#fff}
+    .wrap{padding:0}
+    .card{
+      box-shadow:none;
+      border:1px solid #e5e5e5;
+      page-break-after:always;
+    }
+    .card::before{display:none}
+    .printbar,.help{display:none!important}
+    .sec,.tag{break-inside:avoid}
+  }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <section class="card">
+      <div class="top">
+        <div class="badge">IF FOUND</div>
+        <div style="flex:1">
+          <div class="name" contenteditable="true">Manpreet Kaur Bhupal</div>
+          <div class="subtitle">Please contact me and keep this bag safe.</div>
+        </div>
+      </div>
+
+      <div class="grid">
+        <div class="sec">
+          <h3><span class="flag">🇺🇸</span>USA Address</h3>
+          <div class="addr" contenteditable="true"><p class="MsoNormal">Navdeep Bhupal
+121 Eastgate Drive 
+Monmouth junction 
+New Jersey, 08852 
+United States<o:p></o:p></p>
+
+</div>
+        </div>
+
+        <div class="sec">
+          <h3><span class="flag">🇮🇳</span>India Address</h3>
+          <div class="addr" contenteditable="true"><p class="MsoNormal">Chamkaur Singh Rakhra 
+H.NO 1698 , Street No 1-C 
+New Dashmesh Nagar, Amritsar Road 
+Moga 142001 
+Punjab, India<o:p></o:p></p>
+
+</div>
+        </div>
+      </div>
+
+      <div class="contact">
+        <div class="tag">
+          <div class="row">📞 Phone (US)</div>
+          <div class="contact-line small" contenteditable="true">+1 (908)-548-1747</div>
+        </div>
+        <div class="tag">
+          <div class="row">📞 Phone (IN)</div>
+          <div class="contact-line small" contenteditable="true">+91 73014 00600</div>
+        </div>
+        <div class="tag">
+          <div class="row">✉️ Email</div>
+          <div class="contact-line small" contenteditable="true">Ashwinderbhupal6@gmail.com</div>
+        </div>
+      </div>
+
+      
+
+      <div class="printbar">
+        <button onclick="window.print()">🖨️ Print / Save as PDF</button>
+        <button onclick="copyText()">📋 Copy All Text</button>
+      </div>
+    </section>
+  </div>
+
+<script>
+  function copyText(){
+    const fields = document.querySelectorAll('[contenteditable="true"]');
+    const lines = Array.from(fields).map(e => e.textContent.trim()).filter(Boolean);
+    navigator.clipboard.writeText(lines.join('\n')).then(()=>alert('✓ Contact information copied to clipboard!'));
+  }
+</script>
+<!-- Code injected by live-server -->
+<script>
+	// <![CDATA[  <-- For SVG support
+	if ('WebSocket' in window) {
+		(function () {
+			function refreshCSS() {
+				var sheets = [].slice.call(document.getElementsByTagName("link"));
+				var head = document.getElementsByTagName("head")[0];
+				for (var i = 0; i < sheets.length; ++i) {
+					var elem = sheets[i];
+					var parent = elem.parentElement || head;
+					parent.removeChild(elem);
+					var rel = elem.rel;
+					if (elem.href && typeof rel != "string" || rel.length == 0 || rel.toLowerCase() == "stylesheet") {
+						var url = elem.href.replace(/(&|\?)_cacheOverride=\d+/, '');
+						elem.href = url + (url.indexOf('?') >= 0 ? '&' : '?') + '_cacheOverride=' + (new Date().valueOf());
+					}
+					parent.appendChild(elem);
+				}
+			}
+			var protocol = window.location.protocol === 'http:' ? 'ws://' : 'wss://';
+			var address = protocol + window.location.host + window.location.pathname + '/ws';
+			var socket = new WebSocket(address);
+			socket.onmessage = function (msg) {
+				if (msg.data == 'reload') window.location.reload();
+				else if (msg.data == 'refreshcss') refreshCSS();
+			};
+			if (sessionStorage && !sessionStorage.getItem('IsThisFirstTime_Log_From_LiveServer')) {
+				console.log('Live reload enabled.');
+				sessionStorage.setItem('IsThisFirstTime_Log_From_LiveServer', true);
+			}
+		})();
+	}
+	else {
+		console.error('Upgrade your browser. This Browser is NOT supported WebSocket for Live-Reloading.');
+	}
+	// ]]>
+</script>
+
+</body></html>
